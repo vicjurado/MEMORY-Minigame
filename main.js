@@ -371,6 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             carta.style.width = "80%";
             carta.style.height = "95%";
             carta.style.boxShadow = "10px 2px 5px rgba(0, 0, 0, 0.2)"; // Sombra sutil para un efecto más 3D
+            carta.style.cursor = "pointer";
 
             // Datos de la carta.
             carta.src = "src/trasera.png";  // Parte trasera de la carta
@@ -422,7 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function manejarAcierto(carta1, carta2) {
-        reproducirSonido(sonidoDesaparecer);
+        sonidoDesaparecer.volume = 0.6;
+        sonidoDesaparecer.play();
         carta1.style.visibility = 'hidden';
         carta2.style.visibility = 'hidden';
         paresAcertados++;
@@ -434,10 +436,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function manejarFallo(carta1, carta2) {
-        setTimeout(() => {
-            carta1.setAttribute('src', 'src/trasera.png');
-            carta2.setAttribute('src', 'src/trasera.png');
-        }, 500);
+        carta1.setAttribute('src', 'src/trasera.png');
+        carta2.setAttribute('src', 'src/trasera.png');
     }
 
     function manejarVictoria() {
