@@ -489,10 +489,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function iniciarContadorTiempo() {
+        if (intervalo) {
+            clearInterval(intervalo); // Evitar múltiples temporizadores activos
+        }
+        
+        tiempo = 0;  // Reiniciar tiempo
         intervalo = setInterval(() => {
             tiempo++;
-            const temporizador = document.getElementById("temporizador");
-            temporizador.innerText = `Tiempo: ${tiempo}s`;
+            const temporizadorElemento = document.getElementById("temporizador");
+            if (temporizadorElemento) {
+                temporizadorElemento.innerText = `Tiempo: ${tiempo}s`;
+            }
         }, 1000);
     }
 
@@ -522,6 +529,7 @@ document.addEventListener('DOMContentLoaded', () => {
     botonCuatroPorCuatro.addEventListener("click", function () {
         tiempo = 0;
         tiempoIniciado = false;
+        clearInterval(intervalo);
         actualizarTiempo();
         intentosTotales = 0;
         paresAcertados = 0;
@@ -533,6 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     botonSeisPorSeis.addEventListener("click", function () {
         tiempo = 0;
         tiempoIniciado = false;
+        clearInterval(intervalo);
         actualizarTiempo();
         intentosTotales = 0;
         paresAcertados = 0;
