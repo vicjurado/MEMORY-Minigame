@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let tiempoIniciado = false;
     let tiempo = 0;
     let intervalo;
+    let bloqueo = false;
 
     estilosJuego(); // Genera los estilos del div "juego"
     integrarBarraLateral(); // Introduce la barra lateral de información
@@ -212,8 +213,6 @@ document.addEventListener('DOMContentLoaded', () => {
         regla.innerText = texto;
         return regla;
     }
-    
-
 
     function crearMarcador() {
         const marcador = document.createElement("div");
@@ -348,55 +347,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function configurarTablero(modoJuego) {
-        // Creamos el tablero y obtenemos su referencia
+        // Crear el tablero y obtener su referencia
         const tablero = crearTablero();
-
-        // Aplicamos GRID para dividir el tablero según el modo de juego
         tablero.style.display = "grid";
         tablero.style.gridTemplateColumns = `repeat(${modoJuego}, 1fr)`;
         tablero.style.gridTemplateRows = `repeat(${modoJuego}, 1fr)`;
         tablero.style.alignItems = "center";
         tablero.style.justifyItems = "center";
         tablero.style.gap = "1%";
+    
         let cartasAleatorias = barajarCartas(modoJuego);
         actualizarContadorAciertos();
         actualizarContadorIntentos();
         let seleccionadas = [];
-
+    
         // Crear las cartas
         for (let i = 0; i < modoJuego * modoJuego; i++) {
             const carta = document.createElement("img");
-
+    
             // Estilos de carta
             carta.style.width = "80%";
             carta.style.height = "95%";
-            carta.style.boxShadow = "10px 2px 5px rgba(0, 0, 0, 0.2)"; // Sombra sutil para un efecto más 3D
+            carta.style.boxShadow = "10px 2px 5px rgba(0, 0, 0, 0.2)";
             carta.style.cursor = "pointer";
-
+    
             // Datos de la carta.
-            carta.src = "src/trasera.png";  // Parte trasera de la carta
+            carta.src = "src/trasera.png";  
             carta.setAttribute("carta-nombre", cartasAleatorias[i].nombre);
             carta.setAttribute("carta-img", cartasAleatorias[i].img);
-
+    
             // Agregar cada carta al tablero
             tablero.appendChild(carta);
-
+    
             carta.addEventListener("click", () => {
+                if (bloqueo) return; // No permite hacer clic si el juego está bloqueado
+                
                 if (!tiempoIniciado) {
                     tiempoIniciado = true;
                     iniciarContadorTiempo();
                 }
-
+    
                 if (seleccionadas.length < 2 && !carta.classList.contains('descubierta')) {
                     carta.setAttribute('src', carta.getAttribute('carta-img'));
                     carta.classList.add('descubierta');
                     reproducirSonido(sonidoVoltear);
                     seleccionadas.push(carta);
-
+    
                     if (seleccionadas.length === 2) {
+                        bloqueo = true; // Bloquea nuevos clics mientras se evalúa la pareja
                         setTimeout(() => {
                             verificarPareja(seleccionadas);
                             seleccionadas = [];
+                            bloqueo = false; // Desbloquea cuando se termina la verificación
                         }, 1000);
                     }
                 }
@@ -423,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function manejarAcierto(carta1, carta2) {
-        sonidoDesaparecer.volume = 0.6;
+        sonidoDesaparecer.volume = 0.8;
         sonidoDesaparecer.play();
         carta1.style.visibility = 'hidden';
         carta2.style.visibility = 'hidden';
