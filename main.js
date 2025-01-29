@@ -84,35 +84,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     estilosJuego(); // Genera los estilos del div "juego"
     integrarBarraLateral(); // Introduce la barra lateral de información
-    crearTablero(); // Crea el tablero vacío y la introduce
+    crearTablero(); // Crea el tablero vacío y lo introduce
 
     function estilosJuego() {
         juego.style.width = "100vh";
         juego.style.height = "80vh";
-
         juego.style.margin = "10vh";
-
-        juego.style.border = "2px solid grey";
-
         juego.style.display = "flex";
         juego.style.alignItems = "center";
         juego.style.justifyContent = "center";
+        juego.style.border = "1px solid grey";
     }
 
     function crearBarraLateral() {
         const barraLateral = document.createElement("div");
         barraLateral.style.width = "33.33%";
         barraLateral.style.height = "100%";
-
         barraLateral.style.display = "flex";
         barraLateral.style.flexDirection = "column";
         barraLateral.style.justifyContent = "space-evenly";
         barraLateral.style.alignItems = "center";
-
         barraLateral.style.borderRight = "1px solid grey";
-
         barraLateral.style.backgroundImage = "url(./src/pizarraBackground.jpg";
-
+        
         return barraLateral;
     }
 
@@ -125,13 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
         titulo.style.alignItems = "center";
         titulo.style.justifyContent = "center"; // Centra los elementos dentro del contenedor
     
-        // Crear y añadir el nombre del juego
+        // Crea y añade los elementos
         titulo.appendChild(crearNombreJuego());
-    
-        // Crear y añadir los créditos
         titulo.appendChild(crearCreditos());
-    
-        // Crear y añadir las reglas
         titulo.appendChild(crearReglas());
     
         return titulo;
@@ -149,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "-2px -2px 0px rgba(0, 0, 0, 0.75), " +
             "2px -2px 0px rgba(0, 0, 0, 0.75), " +
             "-2px 2px 0px rgba(0, 0, 0, 0.75)";
-    
         nombreJuego.style.margin = "0"; // Elimina el margen extra entre el título y los demás elementos
     
         return nombreJuego;
@@ -168,9 +157,9 @@ document.addEventListener('DOMContentLoaded', () => {
         enlaceCreditos.style.color = "white";
         enlaceCreditos.style.fontWeight = "1000";
         enlaceCreditos.style.textDecoration = "none";
-        creditos.appendChild(enlaceCreditos);
-    
+        
         creditos.style.margin = "0"; // Elimina el margen extra entre los créditos y las reglas
+        creditos.appendChild(enlaceCreditos);
     
         return creditos;
     }
@@ -201,9 +190,8 @@ document.addEventListener('DOMContentLoaded', () => {
         listaReglas.appendChild(crearRegla("El juego termina cuando se hayan encontrado todas las parejas."));
     
         // Añadir la lista de reglas al contenedor de reglas
-        reglas.appendChild(listaReglas);
-    
         reglas.style.margin = "0"; // Elimina el margen extra entre las reglas y otros elementos
+        reglas.appendChild(listaReglas);
     
         return reglas;
     }
@@ -211,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function crearRegla(texto) {
         const regla = document.createElement("li");
         regla.innerText = texto;
+    
         return regla;
     }
 
@@ -218,14 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const marcador = document.createElement("div");
         marcador.style.width = "100%";
         marcador.style.height = "5%";
-
         marcador.style.color = "white";
         marcador.style.fontSize = "2vh";
-
         marcador.style.display = "flex";
         marcador.style.justifyContent = "center";
         marcador.style.alignItems = "center";
-
         marcador.innerText = `Aciertos: ${paresAcertados}/${totalPares}`;
         marcador.id = "marcador";
 
@@ -236,14 +222,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const temporizador = document.createElement("div");
         temporizador.style.width = "100%";
         temporizador.style.height = "5%";
-
         temporizador.style.color = "white";
         temporizador.style.fontSize = "2vh";
-
         temporizador.style.display = "flex";
         temporizador.style.justifyContent = "center";
         temporizador.style.alignItems = "center";
-
         temporizador.innerText = `Tiempo: ${tiempo}s`;
         temporizador.id = "temporizador";
 
@@ -254,14 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const intentos = document.createElement("div");
         intentos.style.width = "100%";
         intentos.style.height = "5%";
-
         intentos.style.color = "white";
         intentos.style.fontSize = "2vh";
-
         intentos.style.display = "flex";
         intentos.style.justifyContent = "center";
         intentos.style.alignItems = "center";
-
         intentos.innerText = `Intentos: ${intentosTotales}`;
         intentos.id = "intentos";
 
